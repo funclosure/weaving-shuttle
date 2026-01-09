@@ -19,6 +19,16 @@ This is the public companion repo for Shuttle. Here you'll find:
 
 The app itself is at [wwwshuttle.app](https://wwwshuttle.app).
 
+## Claude Code Skill
+
+This repo includes a `/to-shuttle` skill for [Claude Code](https://claude.ai/code). Use it to package research or content into Shuttle's import format:
+
+```
+/to-shuttle
+```
+
+The skill formats your content with threads, hierarchy, and depth links — then generates an import URL or markdown you can paste into Shuttle.
+
 ## Quick Start
 
 1. Visit [wwwshuttle.app](https://wwwshuttle.app)
