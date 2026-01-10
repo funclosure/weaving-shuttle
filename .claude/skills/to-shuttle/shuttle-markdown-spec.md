@@ -11,9 +11,23 @@
 
 ### Structure
 - Use bullet lists with `-` for nodes
+- **Root nodes can omit the `-`** — plain text becomes the thread title
 - Indent with **2 spaces** for child nodes
 - Separate threads with `---` (horizontal rule)
 - Use `- ## Section` for section headers inside bullets
+
+```markdown
+# My Loom
+
+Slash Commands           <- root node (no bullet needed)
+  - Child node           <- children use bullets
+  - Another child
+
+---
+
+Another Thread Title     <- root node for second thread
+  - Its children
+```
 
 ### Depth Links (Bidirectional Connections)
 - **Declare anchor**: `- Node content #anchor-name` (must be at END of line)
