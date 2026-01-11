@@ -10,23 +10,42 @@
 ## Syntax
 
 ### Structure
-- Use bullet lists with `-` for nodes
-- **Root nodes can omit the `-`** — plain text becomes the thread title
-- Indent with **2 spaces** for child nodes
 - Separate threads with `---` (horizontal rule)
+- Indent with **2 spaces** for child nodes
 - Use `- ## Section` for section headers inside bullets
 
+### Two Equivalent Thread Title Formats
+
+**Format A: Plain text title** (recommended)
+```markdown
+Thread Title #anchor
+- Child node
+- Another child
+```
+Plain text followed by bullets → text becomes thread title, bullets become children.
+
+**Format B: All bullets**
+```markdown
+- Thread Title #anchor
+  - Child node
+  - Another child
+```
+First bullet becomes thread title, indented bullets become children.
+
+Both produce identical results. Format A is more readable for content authoring.
+
+### Full Example
 ```markdown
 # My Loom
 
-Slash Commands           <- root node (no bullet needed)
-  - Child node           <- children use bullets
-  - Another child
+Slash Commands           <- thread title (plain text)
+- Child node             <- children use bullets
+- Another child
 
 ---
 
-Another Thread Title     <- root node for second thread
-  - Its children
+Another Thread Title     <- thread title for second thread
+- Its children
 ```
 
 ### Depth Links (Bidirectional Connections)
@@ -39,17 +58,17 @@ Another Thread Title     <- root node for second thread
 ```markdown
 # Knowledge Base
 
-- Overview #overview
-  - Key concepts explained here
-  - See details in [>>](deep-dive)
+Overview #overview
+- Key concepts explained here
+- See details in [>>](deep-dive)
 - Quick Reference
   - Summary points [>>](overview)
 
 ---
 
-- Deep Dive #deep-dive
-  - Detailed explanation
-  - Based on [>>](overview)
+Deep Dive #deep-dive
+- Detailed explanation
+- Based on [>>](overview)
 ```
 
 ## Example - Video Summary
@@ -80,5 +99,5 @@ Thread title: `https://youtube.com/watch?v=...` (timestamps become clickable)
 - **3-7 threads** per loom; each thread = one topic
 - **1-3 depth links** per thread creates connected feel
 - **2-3 nesting levels** is ideal; keep nodes scannable
-- First bullet becomes thread title in sidebar
+- **Thread title** shows in sidebar (plain text or first bullet)
 - Anchor names: short but descriptive (`#intro`, `#key-insight`, `#conclusion`)
