@@ -5,20 +5,33 @@
 
 ---
 
-The 13 Tips #the-13-tips
-- [1/ Run multiple Claudes in parallel in terminal (5 tabs numbered 1-5), use system notifications to track when input is needed](https://x.com/bcherny/status/2007179833990885678) [>>](parallel-sessions)
-- [2/ Run additional Claudes on claude.ai/code in parallel, hand off sessions between terminal and web, start sessions from phone app](https://x.com/bcherny/status/2007179836704600237) [>>](claude-web)
-- [3/ Use Opus 4.5 with thinking enabled for everything — slower but requires less steering, faster overall than smaller models](https://x.com/bcherny/status/2007179838864666847) [>>](model-choice)
-- [4/ Share a single CLAUDE.md (checked into git), update collaboratively when Claude makes errors to prevent repeats](https://x.com/bcherny/status/2007179840848597422) [>>](claude-md)
-- [5/ During code reviews, tag @.claude on PRs to update the docs file, using the Claude Code GitHub action](https://x.com/bcherny/status/2007179842928947333) [>>](compounding)
-- [6/ Start most sessions in Plan mode (shift+tab x2), refine iteratively, then switch to auto-accept edits for one-shot implementation](https://x.com/bcherny/status/2007179845336527000) [>>](plan-mode)
-- [7/ Use slash commands for repetitive workflows (in .claude/commands/), like /commit-push-pr, with inline bash for efficiency](https://x.com/bcherny/status/2007179847949500714) [>>](slash-commands)
-- [8/ Employ subagents for common tasks — code-simplifier to refine code, verify-app for end-to-end testing](https://x.com/bcherny/status/2007179850139000872) [>>](subagents)
-- [9/ Use a PostToolUse hook to auto-format Claude's code, handling the last 10% of formatting to avoid CI errors](https://x.com/bcherny/status/2007179852047335529) [>>](hooks)
-- [10/ Avoid --dangerously-skip-permissions; use /permissions to pre-allow safe bash commands in .claude/settings.json](https://x.com/bcherny/status/2007179854077407667) [>>](permissions)
-- [11/ Let Claude use your tools autonomously — Slack via MCP, BigQuery queries, Sentry logs (configs in .mcp.json)](https://x.com/bcherny/status/2007179856266789204) [>>](mcp-tools)
-- [12/ For long tasks: background agent verification, Stop hooks, or ralph-wiggum plugin; use --permission-mode=dontAsk in sandboxes](https://x.com/bcherny/status/2007179858435281082) [>>](ralph-wiggum)
-- [13/ Provide Claude a verification method (e.g., Chrome extension for UI) to 2-3x quality — invest in domain-specific feedback loops](https://x.com/bcherny/status/2007179861115511237) [>>](verification)
+Boris's 13 Tips #the-13-tips
+- 1/ Run multiple Claudes in parallel in terminal (5 tabs numbered 1-5), use system notifications to track when input is needed [>>](parallel-sessions)
+  - [@bcherny](https://x.com/bcherny/status/2007179833990885678)
+- 2/ Run additional Claudes on claude.ai/code in parallel, hand off sessions between terminal and web, start sessions from phone app [>>](claude-web)
+  - [@bcherny](https://x.com/bcherny/status/2007179836704600237)
+- 3/ Use Opus 4.5 with thinking enabled for everything — slower but requires less steering, faster overall than smaller models [>>](model-choice)
+  - [@bcherny](https://x.com/bcherny/status/2007179838864666847)
+- 4/ Share a single CLAUDE.md (checked into git), update collaboratively when Claude makes errors to prevent repeats [>>](claude-md)
+  - [@bcherny](https://x.com/bcherny/status/2007179840848597422)
+- 5/ During code reviews, tag @.claude on PRs to update the docs file, using the Claude Code GitHub action [>>](compounding)
+  - [@bcherny](https://x.com/bcherny/status/2007179842928947333)
+- 6/ Start most sessions in Plan mode (shift+tab x2), refine iteratively, then switch to auto-accept edits for one-shot implementation [>>](plan-mode)
+  - [@bcherny](https://x.com/bcherny/status/2007179845336527000)
+- 7/ Use slash commands for repetitive workflows (in .claude/commands/), like /commit-push-pr, with inline bash for efficiency [>>](slash-commands)
+  - [@bcherny](https://x.com/bcherny/status/2007179847949500714)
+- 8/ Employ subagents for common tasks — code-simplifier to refine code, verify-app for end-to-end testing [>>](subagents)
+  - [@bcherny](https://x.com/bcherny/status/2007179850139000872)
+- 9/ Use a PostToolUse hook to auto-format Claude's code, handling the last 10% of formatting to avoid CI errors [>>](hooks)
+  - [@bcherny](https://x.com/bcherny/status/2007179852047335529)
+- 10/ Avoid --dangerously-skip-permissions; use /permissions to pre-allow safe bash commands in .claude/settings.json [>>](permissions)
+  - [@bcherny](https://x.com/bcherny/status/2007179854077407667)
+- 11/ Let Claude use your tools autonomously — Slack via MCP, BigQuery queries, Sentry logs (configs in .mcp.json) [>>](mcp-tools)
+  - [@bcherny](https://x.com/bcherny/status/2007179856266789204)
+- 12/ For long tasks: background agent verification, Stop hooks, or ralph-wiggum plugin; use --permission-mode=dontAsk in sandboxes [>>](ralph-wiggum)
+  - [@bcherny](https://x.com/bcherny/status/2007179858435281082)
+- 13/ Provide Claude a verification method (e.g., Chrome extension for UI) to 2-3x quality — invest in domain-specific feedback loops [>>](verification)
+  - [@bcherny](https://x.com/bcherny/status/2007179861115511237)
 
 ---
 
