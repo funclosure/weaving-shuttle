@@ -13,12 +13,28 @@ The 13 Tips #the-13-tips
 - [5/ During code reviews, tag @.claude on PRs to update the docs file, using the Claude Code GitHub action](https://x.com/bcherny/status/2007179842928947333) [>>](compounding)
 - [6/ Start most sessions in Plan mode (shift+tab x2), refine iteratively, then switch to auto-accept edits for one-shot implementation](https://x.com/bcherny/status/2007179845336527000) [>>](plan-mode)
 - [7/ Use slash commands for repetitive workflows (in .claude/commands/), like /commit-push-pr, with inline bash for efficiency](https://x.com/bcherny/status/2007179847949500714) [>>](slash-commands)
-- [8/ Employ subagents for common tasks — code-simplifier to refine code, verify-app for end-to-end testing](https://x.com/bcherny/status/2007179850139000872) #subagents
+- [8/ Employ subagents for common tasks — code-simplifier to refine code, verify-app for end-to-end testing](https://x.com/bcherny/status/2007179850139000872) [>>](subagents)
 - [9/ Use a PostToolUse hook to auto-format Claude's code, handling the last 10% of formatting to avoid CI errors](https://x.com/bcherny/status/2007179852047335529) [>>](hooks)
-- [10/ Avoid --dangerously-skip-permissions; use /permissions to pre-allow safe bash commands in .claude/settings.json](https://x.com/bcherny/status/2007179854077407667) #permissions
-- [11/ Let Claude use your tools autonomously — Slack via MCP, BigQuery queries, Sentry logs (configs in .mcp.json)](https://x.com/bcherny/status/2007179856266789204) #mcp-tools
-- [12/ For long tasks: background agent verification, Stop hooks, or ralph-wiggum plugin; use --permission-mode=dontAsk in sandboxes](https://x.com/bcherny/status/2007179858435281082) [>>](verification)
+- [10/ Avoid --dangerously-skip-permissions; use /permissions to pre-allow safe bash commands in .claude/settings.json](https://x.com/bcherny/status/2007179854077407667) [>>](permissions)
+- [11/ Let Claude use your tools autonomously — Slack via MCP, BigQuery queries, Sentry logs (configs in .mcp.json)](https://x.com/bcherny/status/2007179856266789204) [>>](mcp-tools)
+- [12/ For long tasks: background agent verification, Stop hooks, or ralph-wiggum plugin; use --permission-mode=dontAsk in sandboxes](https://x.com/bcherny/status/2007179858435281082) [>>](ralph-wiggum)
 - [13/ Provide Claude a verification method (e.g., Chrome extension for UI) to 2-3x quality — invest in domain-specific feedback loops](https://x.com/bcherny/status/2007179861115511237) [>>](verification)
+
+---
+
+Background #background
+- Boris started Claude Code as a side project in September 2024
+- Initially just a terminal tool that told him what song was playing
+- Breakthrough: gave Claude access to filesystem and bash
+- "Claude began exploring my codebase on its own... mind-blowing"
+- His manager's advice: "Don't build for the model of today, build for the model six months from now"
+- ## Results (30 days)
+  - 259 PRs landed
+  - 497 commits
+  - 40k lines added, 38k removed
+  - 80-90% of Claude Code is now written by Claude Code
+  - Anthropic productivity per engineer grew 70%
+- Source: [VentureBeat](https://venturebeat.com/technology/the-creator-of-claude-code-just-revealed-his-workflow-and-developers-are), [Every.to Podcast](https://every.to/podcast/how-to-use-claude-code-like-the-people-who-built-it)
 
 ---
 
@@ -35,6 +51,8 @@ Quick Summary #summary
 Parallel Sessions #parallel-sessions
 - ## Terminal (5 sessions)
   - Use numbered tabs 1-5 in iTerm
+  - **Each session uses its own git checkout** (not branches or worktrees)
+  - This avoids merge conflicts between parallel sessions
   - Enable system notifications for when input is needed
   - [iTerm 2 notifications setup](https://code.claude.com/docs/en/terminal-config#iterm-2-system-notifications)
 - ## Web (5-10 sessions)
@@ -64,6 +82,7 @@ Model Choice #model-choice
 Shared Team Memory #shared-memory
 - ## CLAUDE.md #claude-md
   - Single file checked into git, whole team contributes
+  - **Boris's CLAUDE.md is only ~2.5k tokens** — quality over quantity
   - Add mistakes/patterns so Claude learns not to repeat them [>>](compounding)
   - Tag `@.claude` in PRs to suggest updates (via GitHub action)
   - Hierarchical loading: enterprise → project → user level
@@ -71,7 +90,8 @@ Shared Team Memory #shared-memory
   - [Memory docs](https://code.claude.com/docs/en/memory)
 - ## Slash Commands #slash-commands
   - Store in `.claude/commands/` as markdown files
-  - Turn frequent workflows into commands (e.g., `/commit-push-pr`)
+  - `/commit-push-pr` runs dozens of times daily
+  - Pre-compute context with inline bash (git status, etc.) to reduce model back-and-forth
   - Frontmatter options: `description`, `argument-hint`, `allowed-tools`
   - Use `$ARGUMENTS` for user input
   - [Slash commands docs](https://code.claude.com/docs/en/slash-commands)
@@ -79,6 +99,27 @@ Shared Team Memory #shared-memory
   - PostToolUse hook → auto-format code (handles the last 10%)
   - Pre-allow safe commands in `.claude/settings.json` → avoid constant prompts
   - [Hooks docs](https://code.claude.com/docs/en/hooks)
+- ## Permissions #permissions
+  - Don't use `--dangerously-skip-permissions`
+  - Use `/permissions` to pre-allow safe bash commands
+  - Share allowlist in `.claude/settings.json` with team
+
+---
+
+Subagents #subagents
+- Specialized AI personas with separate context windows
+- Keep main thread focused, give each subagent clear mandate
+- ## Boris's Subagent Files
+  - `code-simplifier.md` — cleans up architecture post-work
+  - `verify-app.md` — end-to-end testing instructions
+  - `build-validator.md` — validates builds
+  - `code-architect.md` — architecture decisions
+  - `oncall-guide.md` — oncall assistance
+- ## code-simplifier Example
+  - Tools: Read, Edit, Grep, Glob
+  - "You are a code simplification expert. Goal: make code more readable and maintainable without changing functionality."
+  - Principles: reduce complexity/nesting, extract repeated logic, meaningful variable names, simplify conditionals
+- [Subagents docs](https://code.claude.com/docs/en/sub-agents)
 
 ---
 
@@ -86,12 +127,54 @@ Plan & Verify #plan-verify
 - ## Plan Mode #plan-mode
   - Enter with shift+tab x2
   - Iterate your plan with Claude until solid
+  - "A good plan is really important!"
   - Then switch to auto-accept edits — often becomes one-shots
 - ## Verification #verification
-  - Give Claude reliable ways to check its own work
-  - Unit tests, browser tests, Chrome extension, simulators
-  - Verification → 2-3x better final quality
-  - For long tasks: background verification agent, Stop hook, or ralph-wiggum plugin
+  - **Most important thing for great results**
+  - Give Claude a way to verify its work → 2-3x quality
+  - ## Chrome Extension Example
+    - Claude tests every UI change using Claude Chrome extension
+    - Opens browser, tests the UI, iterates until code works and UX feels good
+    - Domain-specific feedback loop for frontend work
+  - Other options: unit tests, browser tests, simulators
+  - For long tasks: background verification agent, Stop hook, or ralph-wiggum [>>](ralph-wiggum)
+
+---
+
+MCP Tools #mcp-tools
+- Let Claude use your tools autonomously
+- ## Examples Boris Uses
+  - **Slack** — search and post via MCP server
+  - **BigQuery** — run queries via `bq` CLI for analytics
+  - **Sentry** — grab error logs for debugging
+- ## Setup
+  - Configure in `.mcp.json`
+  - Check configs into git to share with team
+- [MCP docs](https://code.claude.com/docs/en/mcp)
+
+---
+
+Ralph Wiggum #ralph-wiggum
+- Autonomous loop for long-running tasks
+- Named after Ralph Wiggum from The Simpsons — persistent iteration despite setbacks
+- ## How It Works
+  - Give Claude a task, it works on it
+  - When Claude tries to exit, Stop hook blocks exit (exit code 2)
+  - Original prompt gets re-injected
+  - Files from previous iteration still there — each iteration builds on the last
+- ## Installation
+  - `/plugin marketplace add anthropics/claude-code`
+  - `/plugin install ralph-wiggum@claude-plugins-official`
+  - `/cancel-ralph` to stop an active loop
+- ## Cost Warning
+  - 50 iterations on medium codebase can cost $50-100+
+  - Always use `--max-iterations` as cost control
+  - Start with 20-30 iterations and adjust
+- ## Best Practices
+  - Success criteria must be specific and verifiable
+  - Bad: "good code quality"
+  - Good: "ESLint passes with zero warnings" or "All unit tests pass"
+- Source: [Ralph Wiggum Plugin](https://github.com/anthropics/claude-code/blob/main/plugins/ralph-wiggum/README.md)
 
 ---
 
