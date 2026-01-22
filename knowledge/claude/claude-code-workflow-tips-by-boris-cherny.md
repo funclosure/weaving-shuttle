@@ -1,11 +1,7 @@
 # Claude Code Workflow Tips by Boris Cherny
 
-- [Boris Cherny: I'm Boris and I created Claude Code. Lots of people have asked...](https://x.com/bcherny/status/2007179832300581177)
-  - [Open with Shuttle](https://wwwshuttle.app/import?url=https://weaving.wwwshuttle.app/knowledge/claude/claude-code-workflow-tips-by-boris-cherny.md)
+[Boris Cherny: I'm Boris and I created Claude Code. Lots of people have asked...](https://x.com/bcherny/status/2007179832300581177)
 
----
-
-Boris's 13 Tips #the-13-tips
 > 1/ Run multiple Claudes in parallel in terminal (5 tabs numbered 1-5), use system notifications to track when input is needed [>>](parallel-sessions)
   - [@bcherny](https://x.com/bcherny/status/2007179833990885678)
 > 2/ Run additional Claudes on claude.ai/code in parallel, hand off sessions between terminal and web, start sessions from phone app [>>](claude-web)
