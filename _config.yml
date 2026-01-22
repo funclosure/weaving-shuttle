@@ -1,0 +1,14 @@
+title: Shuttle
+description: Two-dimensional thinking for the modern mind
+url: https://weaving.wwwshuttle.app
+baseurl: ""
+
+# Files without front matter are copied as-is (raw .md files)
+# Files with front matter (index.html) are processed by Jekyll
+exclude:
+  - CONTRIBUTING.md
+  - LICENSE
+  - .claude/
+  - README.md
+  - Gemfile
+  - Gemfile.lock

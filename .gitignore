@@ -10,3 +10,10 @@
 # Claude Code local settings
 .claude/settings.local.json
 .claude/CLAUDE.local.md
+
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+Gemfile.lock
