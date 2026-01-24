@@ -1,19 +1,19 @@
 # Claude Code Workflow Tips by Boris Cherny
 
 [Boris Cherny: I'm Boris and I created Claude Code. Lots of people have asked...](https://youtu.be/DW4a1Cm8nG4?t=1724)
-- ![Boris Cherny: I'm Boris and I created Claude Code. Lots of people have asked...](https://x.com/bcherny/status/2007179832300581177)
 
-> 1/ Run multiple Claudes in parallel in terminal (5 tabs numbered 1-5), use system notifications to track when input is needed [>>](parallel-sessions)
+- [28:44] ![Boris Cherny: I'm Boris and I created Claude Code. Lots of people have asked...](https://x.com/bcherny/status/2007179832300581177)
+> [29:55] 1/ Run multiple Claudes in parallel in terminal (5 tabs numbered 1-5), use system notifications to track when input is needed [>>](parallel-sessions)
   - [@bcherny](https://x.com/bcherny/status/2007179833990885678)
-> 2/ Run additional Claudes on claude.ai/code in parallel, hand off sessions between terminal and web, start sessions from phone app [>>](claude-web)
+> [31:52] 2/ Run additional Claudes on claude.ai/code in parallel, hand off sessions between terminal and web, start sessions from phone app [>>](claude-web)
   - [@bcherny](https://x.com/bcherny/status/2007179836704600237)
-> 3/ Use Opus 4.5 with thinking enabled for everything — slower but requires less steering, faster overall than smaller models [>>](model-choice)
+> [33:44] 3/ Use Opus 4.5 with thinking enabled for everything — slower but requires less steering, faster overall than smaller models [>>](model-choice)
   - [@bcherny](https://x.com/bcherny/status/2007179838864666847)
-> 4/ Share a single CLAUDE.md (checked into git), update collaboratively when Claude makes errors to prevent repeats [>>](claude-md)
+> [34:30] 4/ Share a single CLAUDE.md (checked into git), update collaboratively when Claude makes errors to prevent repeats [>>](claude-md)
   - [@bcherny](https://x.com/bcherny/status/2007179840848597422)
-> 5/ During code reviews, tag @.claude on PRs to update the docs file, using the Claude Code GitHub action [>>](compounding)
+> [35:20] 5/ During code reviews, tag @.claude on PRs to update the docs file, using the Claude Code GitHub action [>>](compounding)
   - [@bcherny](https://x.com/bcherny/status/2007179842928947333)
-> 6/ Start most sessions in Plan mode (shift+tab x2), refine iteratively, then switch to auto-accept edits for one-shot implementation [>>](plan-mode)
+> [37:35] 6/ Start most sessions in Plan mode (shift+tab x2), refine iteratively, then switch to auto-accept edits for one-shot implementation [>>](plan-mode)
   - [@bcherny](https://x.com/bcherny/status/2007179845336527000)
 > 7/ Use slash commands for repetitive workflows (in .claude/commands/), like /commit-push-pr, with inline bash for efficiency [>>](slash-commands)
   - [@bcherny](https://x.com/bcherny/status/2007179847949500714)
@@ -27,7 +27,7 @@
   - [@bcherny](https://x.com/bcherny/status/2007179856266789204)
 > 12/ For long tasks: background agent verification, Stop hooks, or ralph-wiggum plugin; use --permission-mode=dontAsk in sandboxes [>>](ralph-wiggum)
   - [@bcherny](https://x.com/bcherny/status/2007179858435281082)
-> 13/ Provide Claude a verification method (e.g., Chrome extension for UI) to 2-3x quality — invest in domain-specific feedback loops [>>](verification)
+> [38:25] 13/ Provide Claude a verification method (e.g., Chrome extension for UI) to 2-3x quality — invest in domain-specific feedback loops [>>](verification)
   - [@bcherny](https://x.com/bcherny/status/2007179861115511237)
 
 ---
