@@ -1,6 +1,6 @@
 # Shuttle MCP Server — Tool Reference
 
-> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.9.1, 2026-08-11).
+> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.10.1, 2026-08-11).
 
 Companion to the [Using Shuttle guide](https://weaving.wwwshuttle.app/tutorials/using-shuttle/). Code-verified against `app/mcp-server/` (package `@wwwshuttle-app/mcp` v0.1.0) and the app-side bridge (`src/services/mcpBridge.ts`).
 
