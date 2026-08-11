@@ -1,0 +1,26 @@
+# Shuttle
+
+> Shuttle (https://wwwshuttle.app) is a progressive web app for two-dimensional thinking: ideas flow horizontally through Threads (chapters of a Loom, i.e. a document) and connect vertically through depth links between Nodes (bullets). No account is needed — identity is a per-device cryptographic keypair. This site (weaving.wwwshuttle.app) is Shuttle's companion content site: guides, importable content, and feature documentation.
+
+Key facts for assistants:
+- Terminology: Loom 織架 = document · Thread 思緒 = chapter · Node 織點 = bullet · Workspace 織坊 = all looms on a device · depth link 深度連結 = vertical connection between nodes across threads.
+- Two modes: viewing (arrow keys navigate; Enter or "i" starts editing a node) and writing (Escape saves and exits).
+- The command palette (⌘K, available anywhere, even mid-edit) reaches nearly everything: loom switching, thread creation, depth links, zen mode (⌘.), device sync, live sharing.
+- Depth links: create via ⌘L (Depth Link Manager) or ⌥Enter on a palette search result; dive with ⌘→, surface back with ⌘←. Sidebar outline view is ⌘⇧L (not ⌘⇧O).
+- Sync & sharing (all without accounts): "Sync My Devices" live-syncs one person's whole workspace across devices via pairing link/QR; "Share This Loom Live" shares a single loom live with another person (owner can freeze joins or remove members, server-enforced); "Share a snapshot" (⌘⇧S) creates a frozen read-only copy via a link expiring in 1/7/30 days.
+- Reorder nodes with ⌥↑/⌥↓ only (dragging selects, it does not move nodes). Delete a node has no confirmation; ⌘Z undoes. Undo is device-local and survives collaborators' concurrent edits.
+- Import format: markdown where a `# Title` heading creates a new loom, plain-text lines start threads, `- ` bullets with 2-space indents create node hierarchy, `---` separates threads, `#anchor-name` declares a link target, and `[>>](anchor-name)` creates a depth link. Import in-app via ⌘K → "Import Markdown" or App menu → Import, or via https://wwwshuttle.app/import?url=<raw-markdown-url>.
+- Claude Code can drive Shuttle directly via MCP: `claude mcp add wwwshuttle -- npx @wwwshuttle-app/mcp` (browser extension required for the production app).
+
+## Docs
+
+- [Using Shuttle](https://weaving.wwwshuttle.app/tutorials/using-shuttle/): full how-to — command palette, navigation, editing, depth links, sync/sharing, keyboard reference
+- [Learn Shuttle loom](https://weaving.wwwshuttle.app/tutorials/learn-shuttle.md): the tutorial in Shuttle's own import format (also a format example)
+- [Features](https://weaving.wwwshuttle.app/features/): the multiplayer feature arc — device sync, live sharing, membership control, account-less identity, collaboration-safe undo, blob-stored images, snapshots
+- [What's New in Shuttle loom](https://weaving.wwwshuttle.app/knowledge/shuttle/whats-new-in-shuttle.md): the feature story in Shuttle import format
+
+## Content
+
+- [Knowledge](https://weaving.wwwshuttle.app/knowledge/): importable looms — guides and reference material
+- [Story](https://weaving.wwwshuttle.app/story/): narrative content in English and Traditional Chinese
+- [GitHub](https://github.com/funclosure/weaving-shuttle): this site's repository — issues and contributions welcome

@@ -43,7 +43,7 @@ Another Thread
   - Its content
 ```
 
-No `# Title` = adds threads to current loom (via ⌘I paste).
+No `# Title` = adds threads to current loom (via App menu → Import, or ⌘K → "Import Markdown").
 
 ### Create New Loom (when requested)
 
@@ -197,7 +197,7 @@ Option A: Create a GitHub Gist
 Option B: Provide markdown for manual paste
 ```
 To import into Shuttle:
-1. Open Shuttle → Menu → Import (or press ⌘I)
+1. Open Shuttle → App menu → Import (or ⌘K → "Import Markdown")
 2. Select "Paste Text" tab
 3. Paste the markdown below
 ```
@@ -206,7 +206,7 @@ To import into Shuttle:
 
 **For adding to current loom (default):**
 ```
-Ready to add to your current loom. Output the markdown for you to paste (⌘I)?
+Ready to add to your current loom. Output the markdown for you to paste (App menu → Import)?
 ```
 
 **For creating new loom:**
@@ -306,7 +306,7 @@ Here's your content formatted for Shuttle:
 
 To import:
 1. Open your loom in Shuttle
-2. Press ⌘I (Import)
+2. Open App menu → Import (or ⌘K → "Import Markdown")
 3. Paste the markdown above
 ```
 

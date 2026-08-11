@@ -1,0 +1,208 @@
+---
+layout: default
+title: Using Shuttle
+description: How to use Shuttle — the command palette, navigation, editing, depth links, sync and sharing, and the full keyboard reference.
+---
+
+<div class="page-header">
+  <h1>Using Shuttle</h1>
+  <p>
+    Everything below is where it lives and how it works — the command palette, the two modes,
+    editing, depth links, sync and sharing, and the full keyboard reference. Verified against
+    the app (v0.9.1).
+  </p>
+</div>
+
+<section class="section feature" id="basics">
+  <div class="section-header">
+    <h2>The Basics</h2>
+  </div>
+  <p>
+    Shuttle organizes thought in two dimensions. Horizontally, a <strong>Loom</strong> (織架) is a
+    document made of <strong>Threads</strong> (思緒) — chapters you walk through with ↑ and ↓ in
+    the thread list.
+    Vertically, every bullet is a <strong>Node</strong> (織點), and <strong>depth links</strong>
+    (深度連結) connect nodes across threads so you can dive deeper and surface back. Your whole
+    collection of looms is a <strong>Workspace</strong> (織坊) — that's also the unit of device sync.
+  </p>
+  <p>
+    The app has two modes. In <strong>viewing mode</strong> (the default), arrow keys navigate and
+    nodes are read-only. Press <code>Enter</code> or <code>i</code> on a node to enter
+    <strong>writing mode</strong> — a text editor — and <code>Escape</code> to save and drop back
+    to viewing.
+  </p>
+</section>
+
+<section class="section feature" id="command-palette">
+  <div class="section-header">
+    <h2>The Command Palette (⌘K)</h2>
+  </div>
+  <p>
+    <code>⌘K</code> opens the command palette from anywhere — even while you're editing a node.
+    It's the fastest route to almost everything: switching looms, creating threads, managing
+    depth links, zen mode, sync, and sharing.
+  </p>
+  <p>
+    Typing does double duty: it filters commands, and at two or more characters it also
+    fuzzy-searches all your node content. <code>Enter</code> jumps to a search result — and
+    holding <code>⌥</code> while pressing <code>Enter</code> creates a <em>depth link</em> from
+    the currently focused node to that result instead of navigating.
+  </p>
+</section>
+
+<section class="section feature" id="navigating">
+  <div class="section-header">
+    <h2>Getting Around</h2>
+  </div>
+  <p>
+    Viewing mode has two panes: the thread list (sidebar) and the content. <code>←</code> and
+    <code>→</code> move between them; <code>↑</code>/<code>↓</code> move through threads or nodes.
+    Switch looms with <code>⌘B</code> (the Loom Manager) or jump directly with
+    <code>⌘1</code>–<code>⌘9</code>. <code>⌘.</code> toggles zen mode; <code>⇧⌘I</code> opens
+    Loomy, the built-in AI helper.
+  </p>
+  <p>
+    On a phone, swipe right to open the thread drawer and left to close it. While a node is
+    focused, a bottom toolbar covers the essentials: previous/next node, todo, indent/outdent,
+    more options, depth link, and edit/done.
+  </p>
+</section>
+
+<section class="section feature" id="editing">
+  <div class="section-header">
+    <h2>Create &amp; Edit</h2>
+  </div>
+  <p>
+    <code>⇧T</code> creates a thread; <code>⇧⌥T</code> creates a whole new loom. Inside a node,
+    <code>Enter</code> splits it at the cursor, <code>Backspace</code> at the start merges it into
+    the one above, and <code>Tab</code>/<code>⇧Tab</code> indent and outdent. Reorder nodes with
+    <code>⌥↑</code>/<code>⌥↓</code> — that's the only way; dragging a node selects rather than moves.
+  </p>
+  <p>
+    <code>⌘Enter</code> cycles a node through todo states (none → unchecked → checked). In viewing
+    mode the clipboard works on whole subtrees: <code>⌘C</code>/<code>⌘X</code>/<code>⌘V</code>,
+    and <code>⌘⇧C</code> copies the entire thread. Pasting multi-line or markdown text splits it
+    into nodes automatically; <code>⌘⇧⌥V</code> pastes verbatim. Paste an image and it's stored as
+    an asset. Markdown formatting works as you'd hope: <code>⌘B</code>/<code>⌘I</code> for
+    bold/italic while writing, <code>⌘1</code>–<code>⌘3</code> for headings, and typing a third
+    backtick expands a fenced code block.
+  </p>
+  <p>
+    Outgrown a bullet? Palette → <em>Convert Node to Thread</em> promotes a node and its subtree
+    into a thread of its own.
+  </p>
+</section>
+
+<section class="section feature" id="depth-links">
+  <div class="section-header">
+    <h2>Depth Links — the Vertical Dimension</h2>
+  </div>
+  <p>
+    <strong>Create:</strong> focus a node and press <code>⌘L</code> to open the Depth Link
+    Manager, then search for the target and press <code>Enter</code>. Or use the palette trick
+    above (<code>⌥Enter</code> on a search result). Or <code>⌘</code>-click a thread or node
+    reference in a Loomy reply.
+  </p>
+  <p>
+    <strong>Dive:</strong> on a node with exactly one link, <code>⌘→</code> takes you there
+    (clicking the node's link indicator does the same). With more links, you pick from the manager.
+    <strong>Surface:</strong> <code>⌘←</code> pops you back to where you dove from.
+  </p>
+</section>
+
+<section class="section feature" id="sync-and-share">
+  <div class="section-header">
+    <h2>Sync &amp; Share</h2>
+  </div>
+  <p>
+    Three distinct flows — pick by what you want (full detail on the
+    <a href="/features/">Features page</a>):
+  </p>
+  <p>
+    <strong>Sync My Devices</strong> (palette or app menu) keeps your whole workspace live on your
+    own devices. Enable sync on the first device, then open the pairing link or scan the QR code on
+    the next one. Note: joining replaces the joining device's local data (a backup is kept —
+    "Restore previous workspace" undoes it).
+  </p>
+  <p>
+    <strong>Share This Loom Live</strong> (loom icon menu → "Share live…", or the palette) shares
+    one loom with another person, live in both directions. Opening the dialog starts sharing
+    immediately; send the invite link or QR. As owner you can stop new joins or remove a member at
+    any time, enforced server-side.
+  </p>
+  <p>
+    <strong>Share a snapshot</strong> (<code>⌘⇧S</code>) hands someone a frozen, read-only copy of
+    a thread, a loom, or everything — a short link that expires in 1, 7 (default), or 30 days.
+  </p>
+</section>
+
+<section class="section feature" id="keyboard-reference">
+  <div class="section-header">
+    <h2>Keyboard Reference</h2>
+  </div>
+
+  <h3>Global</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><td><code>⌘K</code></td><td>Command palette (works anywhere, even mid-edit)</td></tr>
+      <tr><td><code>⌘Z</code> / <code>⌘⇧Z</code></td><td>Undo / redo</td></tr>
+      <tr><td><code>⌘B</code></td><td>Loom Manager (in writing mode: bold)</td></tr>
+      <tr><td><code>⌘1</code>–<code>⌘9</code>, <code>⌘0</code></td><td>Switch to Nth / last loom</td></tr>
+      <tr><td><code>⌘⇧L</code></td><td>Toggle sidebar list/outline view</td></tr>
+      <tr><td><code>⌘⇧I</code></td><td>Toggle Loomy (AI chat)</td></tr>
+      <tr><td><code>⌘⇧M</code></td><td>Toggle Map View (threads with place nodes)</td></tr>
+      <tr><td><code>⌘.</code></td><td>Zen mode</td></tr>
+      <tr><td><code>⌘⇧S</code></td><td>Share a snapshot</td></tr>
+      <tr><td><code>⇧T</code> / <code>⇧⌥T</code></td><td>New thread / new loom</td></tr>
+    </table>
+  </div>
+
+  <h3>Viewing mode</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><td><code>↑</code> / <code>↓</code></td><td>Previous / next node (or thread, in the sidebar)</td></tr>
+      <tr><td><code>⇧↑</code> / <code>⇧↓</code></td><td>Extend selection</td></tr>
+      <tr><td><code>←</code> / <code>→</code></td><td>Switch between thread list and content panes</td></tr>
+      <tr><td><code>Enter</code> or <code>i</code></td><td>Edit the focused node</td></tr>
+      <tr><td><code>Tab</code> / <code>⇧Tab</code></td><td>Indent / outdent (⇧Tab twice on a root node → convert to thread)</td></tr>
+      <tr><td><code>⌥↑</code> / <code>⌥↓</code></td><td>Move node (or thread) up / down</td></tr>
+      <tr><td><code>⌘A</code></td><td>Select all nodes in the thread</td></tr>
+      <tr><td><code>⌘C</code> / <code>⌘X</code> / <code>⌘V</code></td><td>Copy / cut / paste node subtrees</td></tr>
+      <tr><td><code>⌘⇧C</code></td><td>Copy the whole thread</td></tr>
+      <tr><td><code>⌘⌫</code></td><td>Delete node or thread (undo toast)</td></tr>
+      <tr><td><code>⌘→</code> / <code>⌘←</code></td><td>Dive into a depth link / surface back</td></tr>
+      <tr><td><code>⌘L</code></td><td>Depth Link Manager</td></tr>
+      <tr><td><code>⌘Enter</code></td><td>Cycle todo checkbox</td></tr>
+    </table>
+  </div>
+
+  <h3>Writing mode</h3>
+  <div class="table-wrap">
+    <table>
+      <tr><td><code>⌘B</code> / <code>⌘I</code> / <code>⌘⇧S</code></td><td>Bold / italic / strikethrough</td></tr>
+      <tr><td><code>⌘1</code>–<code>⌘3</code></td><td>Heading level on the line</td></tr>
+      <tr><td><code>Enter</code></td><td>Split the node (plain newline inside a code fence; ⇧Enter always newline)</td></tr>
+      <tr><td><code>↑</code> / <code>↓</code> at the edge</td><td>Save and hop to the previous / next node, staying in writing mode</td></tr>
+      <tr><td><code>⌘⇧⌥V</code></td><td>Paste verbatim (no node splitting)</td></tr>
+      <tr><td><code>Escape</code></td><td>Save and exit to viewing mode</td></tr>
+    </table>
+  </div>
+  <p style="font-size: 0.85rem; color: var(--text-secondary);">
+    Shortcuts are shown in macOS notation and are suppressed while a Chinese/Japanese IME is composing.
+  </p>
+</section>
+
+<section class="section">
+  <div class="content-list">
+    <article class="content-card">
+      <h3><a href="/tutorials/learn-shuttle.md">Learn Shuttle, inside Shuttle</a></h3>
+      <p>This guide as an importable loom — practice navigating, diving, and editing on the tutorial itself.</p>
+      <div class="card-actions">
+        <a href="https://wwwshuttle.app/import?url=https://weaving.wwwshuttle.app/tutorials/learn-shuttle.md" class="import-link">
+          <img src="/assets/shuttle-logo-36px.svg" alt="" width="14" height="14" style="vertical-align: -2px;"> Import to Shuttle
+        </a>
+        <a href="/tutorials/learn-shuttle.md">View raw</a>
+      </div>
+    </article>
+  </div>
+</section>
