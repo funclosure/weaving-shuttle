@@ -1,0 +1,144 @@
+---
+layout: default
+title: Features
+description: Shuttle went multiplayer — live device sync, real-time Loom sharing, and identity without accounts. All live at wwwshuttle.app.
+---
+
+<div class="page-header">
+  <h1>Shuttle Went Multiplayer</h1>
+  <p>
+    Shuttle is an app for exploring ideas in two dimensions — Threads carry the sequential flow,
+    depth links let you dive deeper and surface back. Your documents are <strong>Looms</strong>,
+    their chapters are <strong>Threads</strong>, and every bullet is a <strong>Node</strong>.
+  </p>
+  <p style="margin-top: 0.75rem;">
+    Recently, all of that learned to travel: across your devices, and to other people.
+    Everything below is live today at <a href="https://wwwshuttle.app" target="_blank" rel="noopener">wwwshuttle.app</a>.
+  </p>
+</div>
+
+<section class="section feature" id="sync-my-devices">
+  <div class="section-header">
+    <h2>Sync My Devices</h2>
+  </div>
+  <p>
+    Your whole workspace, live on every device. Edit on your laptop, glance at your phone —
+    changes appear within moments, in both directions.
+  </p>
+  <p>
+    No account, no email, no password. Your first device creates the sync room; others join
+    with a link or QR code. Behind the scenes each device carries its own cryptographic
+    identity, so there's nothing to sign up for and nothing to leak.
+  </p>
+  <p>
+    Offline is a first-class citizen: edits made on the train queue quietly and reconcile when
+    you're back. A crash or a dead battery never costs you a change.
+  </p>
+  <!-- screenshot placeholder: Sync My Devices pairing panel with QR code -->
+  <p class="entry-point">Command palette → “Sync My Devices”</p>
+</section>
+
+<section class="section feature" id="share-this-loom-live">
+  <div class="section-header">
+    <h2>Share This Loom Live</h2>
+  </div>
+  <p>
+    Share a single Loom — just that one document — live with another person. They see your
+    edits as you make them, and they can edit too. The rest of your workspace stays private.
+  </p>
+  <p>
+    The other person gets a link; when they accept, an <em>Open</em> button takes them straight
+    into the shared Loom. Two commands, two very different things: “Sync My Devices” is all
+    your stuff on your devices; “Share This Loom Live” is one document with other people.
+  </p>
+  <!-- screenshot placeholder: Share This Loom Live invite dialog + recipient accept toast with Open button -->
+  <p class="entry-point">Command palette → “Share This Loom Live”</p>
+</section>
+
+<section class="section feature" id="you-stay-in-control">
+  <div class="section-header">
+    <h2>You Stay in Control</h2>
+  </div>
+  <p>
+    The owner of a shared Loom can revoke someone's access, or freeze them to read-only, at
+    any moment. It's enforced by the server and takes effect immediately — not just hidden in
+    the interface.
+  </p>
+</section>
+
+<section class="section feature" id="identity-without-accounts">
+  <div class="section-header">
+    <h2>Identity Without Accounts</h2>
+  </div>
+  <p>
+    No signup, no password, no email — your device <em>is</em> your identity. Each device
+    carries its own cryptographic identity, created quietly the first time it's needed and
+    stored only on that device.
+  </p>
+  <p>
+    Joining a room means answering a signed challenge: the room learns your public-key
+    fingerprint, and nothing else about you.
+  </p>
+</section>
+
+<section class="section feature" id="undo-that-survives-collaboration">
+  <div class="section-header">
+    <h2>Undo That Survives Collaboration</h2>
+  </div>
+  <p>
+    While a collaborator's edits stream in, Cmd+Z still does exactly what you expect: it undoes
+    <em>your</em> last change — never theirs — and never corrupts the shared document. Most
+    collaborative editors get this wrong; Shuttle keeps a private history of your own edits on
+    your device, so undo and redo stay yours.
+  </p>
+</section>
+
+<section class="section feature" id="images-that-dont-weigh-you-down">
+  <div class="section-header">
+    <h2>Images That Don't Weigh You Down</h2>
+  </div>
+  <p>
+    Paste images straight into a node. The bytes live in dedicated blob storage rather than
+    inside the database or the sync stream, so an image-heavy Loom syncs just as fast as a
+    text-only one.
+  </p>
+</section>
+
+<section class="section feature" id="snapshot-sharing">
+  <div class="section-header">
+    <h2>Snapshot Sharing</h2>
+  </div>
+  <p>
+    Sometimes you don't want a live document — you want to hand someone a frozen copy. Share a
+    read-only snapshot of a Loom, or of your whole workspace, as a short link that expires
+    after a time you choose (up to 30 days; 7 by default).
+  </p>
+  <p>
+    Live sharing is a conversation; a snapshot is a photograph. Both are one command away.
+  </p>
+</section>
+
+<section class="section feature" id="also-recent">
+  <div class="section-header">
+    <h2>Also Recent</h2>
+  </div>
+  <p>
+    Map View now understands official Google Maps URLs, and the app is multi-tab safe — open as
+    many tabs as you like; they coordinate invisibly.
+  </p>
+</section>
+
+<section class="section">
+  <div class="content-list">
+    <article class="content-card">
+      <h3><a href="/knowledge/shuttle/whats-new-in-shuttle.md">Read this page as a Loom</a></h3>
+      <p>The whole feature story, in Shuttle format — threads to walk through, depth links to dive into.</p>
+      <div class="card-actions">
+        <a href="https://wwwshuttle.app/import?url=https://weaving.wwwshuttle.app/knowledge/shuttle/whats-new-in-shuttle.md" class="import-link">
+          <img src="/assets/shuttle-logo-36px.svg" alt="" width="14" height="14" style="vertical-align: -2px;"> Import to Shuttle
+        </a>
+        <a href="/knowledge/shuttle/whats-new-in-shuttle.md">View raw</a>
+      </div>
+    </article>
+  </div>
+</section>
