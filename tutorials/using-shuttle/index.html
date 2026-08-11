@@ -1,15 +1,15 @@
 ---
 layout: default
 title: Using Shuttle
-description: How to use Shuttle — the command palette, navigation, editing, depth links, sync and sharing, and the full keyboard reference.
+description: How to use Shuttle — the command palette, navigation, editing, depth links, Loomy, what renders in nodes, import/export, sync and sharing, and the full keyboard reference.
 ---
 
 <div class="page-header">
   <h1>Using Shuttle</h1>
   <p>
     Everything below is where it lives and how it works — the command palette, the two modes,
-    editing, depth links, sync and sharing, and the full keyboard reference. Verified against
-    the app (v0.9.1).
+    editing, depth links, sync and sharing, Loomy the AI helper, what renders inside nodes,
+    import and export, and the full keyboard reference. Verified against the app (v0.9.1).
   </p>
 </div>
 
@@ -136,6 +136,125 @@ description: How to use Shuttle — the command palette, navigation, editing, de
   </p>
 </section>
 
+<section class="section feature" id="loomy">
+  <div class="section-header">
+    <h2>Loomy, the AI Helper</h2>
+  </div>
+  <p>
+    Loomy runs on <em>your</em> API key (Anthropic by default, or Gemini), calling the provider
+    straight from your browser — there's no Shuttle backend reading your thoughts. Set the key and
+    model in Loomy Settings (the gear icon).
+  </p>
+  <p>
+    There are two ways to use it. The <strong>chat panel</strong> (<code>⇧⌘I</code>) is for
+    building: it can create looms and threads, bulk-import structured content with hierarchy and
+    depth links, search your nodes, analyze YouTube videos, and search the web. Thread and node
+    references in its replies are clickable — and <code>⌘</code>-clicking one creates a depth link
+    from your focused node. <strong>Inline AI</strong> is for transforming: press <code>⌘K</code>,
+    type a request while a node is focused (or nodes are selected), and choose "Ask Loomy about
+    this" — it reads the full node content and can rewrite it in place or add new sibling nodes.
+  </p>
+  <p>
+    Worth knowing the boundaries: chat Loomy <em>cannot</em> edit or delete existing nodes —
+    rewriting is inline AI's job. Selecting nodes doesn't send their text to the chat (only a
+    count); again, inline AI is the path that reads selections. And chat history doesn't survive a
+    reload — use "Export to Thread" (in the clear-conversation dialog) to keep a conversation.
+  </p>
+</section>
+
+<section class="section feature" id="content-model">
+  <div class="section-header">
+    <h2>What Renders in a Node</h2>
+  </div>
+  <p>
+    Nodes hold markdown: bold, italic, strikethrough, headings, links, blockquotes, lists, tables,
+    and fenced code blocks with syntax highlighting — plus <code>```mermaid</code> diagrams and
+    <code>```plot</code> function graphs. A single newline is a hard line break. Callouts use
+    <code>&gt; [!note]</code>, <code>[!tip]</code>, <code>[!warning]</code> and friends — or any
+    emoji: <code>&gt; [!🧶] Yarn notes</code>.
+  </p>
+  <p>
+    Checkboxes have one subtlety: <code>[ ] task</code> alone on a line is an
+    <em>interactive</em> checkbox (click or <code>⌘Enter</code> toggles it), while
+    <code>- [ ]</code> inside a list renders but isn't clickable. Not supported: footnotes and
+    reference-style links (they silently disappear), LaTeX, and raw HTML other than
+    <code>&lt;img&gt;</code>.
+  </p>
+  <p>
+    <strong>Video threads:</strong> make a thread's title a YouTube URL (bare, or
+    <code>[My Title](url)</code>) and the player embeds in the thread header. <code>[m:ss]</code>
+    timestamps in that thread's nodes become click-to-seek buttons, and <code>⌘⇧T</code> while
+    editing inserts the current playback position.
+    <strong>Map View:</strong> nodes containing a Google Maps URL <em>with coordinates</em> become
+    place pins on a map panel (<code>⌘⇧M</code>). One catch: <code>maps.app.goo.gl</code> short
+    links carry no coordinates and won't pin — open them and copy the full URL instead.
+    <strong>X posts:</strong> embed with the image syntax, <code>![](post-url)</code>.
+  </p>
+  <p>
+    Paste images directly while editing — they're compressed, stored locally as assets, and synced
+    via blob storage. The <strong>ThoughtWeave</strong> strip at the bottom of the sidebar shows
+    every depth link in the loom as a two-column stitch; click either half to jump there.
+  </p>
+</section>
+
+<section class="section feature" id="import-export">
+  <div class="section-header">
+    <h2>Import &amp; Export</h2>
+  </div>
+  <p>
+    The import format is plain markdown: a <code># Title</code> line starts a new loom,
+    <code>---</code> separates threads, <code>- </code> bullets with 2-space indents build the
+    hierarchy, <code>#anchor-name</code> at a node's end declares a link target, and
+    <code>[&gt;&gt;](anchor-name)</code> creates a depth link. Without a <code># Title</code>,
+    content imports into your current thread.
+  </p>
+  <p>
+    Ways in: <code>⌘K</code> → "Import Markdown" (paste, upload a file, or fetch a URL), App menu →
+    Import (auto-detects share links, backups, and markdown — always <em>merges</em>, never
+    replaces), and App menu → File → Load for <code>.shuttle</code> backups (asks Replace or
+    Merge). Two merge behaviors worth knowing: a loom you already have is skipped (your copy wins),
+    and merging never resurrects content you've deleted.
+  </p>
+  <p>
+    Ways out: App menu → Export gives a <code>.shuttle</code> backup (one loom or everything) or
+    the current loom as markdown — and markdown export round-trips: depth links are written as
+    anchors and recreated on re-import. For handing someone a copy, snapshot links
+    (<code>⌘⇧S</code>) are usually simpler.
+  </p>
+</section>
+
+<section class="section feature" id="workspace-folders">
+  <div class="section-header">
+    <h2>Workspace Folders (Chrome/Edge)</h2>
+  </div>
+  <p>
+    App menu → File → Connect Folder turns a folder into a home for multiple workspaces — one
+    <code>.shuttle</code> file each, auto-saved 30 seconds after changes and when you leave.
+    Switch between them with <code>⌘⇧O</code>.
+  </p>
+  <p>
+    <strong>One real warning:</strong> switching workspaces (or creating a new one) saves the
+    current one, then replaces your entire live database with the target — immediately, with no
+    confirmation, and the change propagates to synced devices and live-shared looms like any other
+    edit. Treat the switcher with the respect you'd give a "replace everything" button, because
+    that's what it is.
+  </p>
+</section>
+
+<section class="section feature" id="claude-code">
+  <div class="section-header">
+    <h2>Connect Claude Code (MCP)</h2>
+  </div>
+  <p>
+    Claude Code can read and write your Shuttle directly:
+    <code>claude mcp add wwwshuttle -- npx @wwwshuttle-app/mcp</code>. On the production app you
+    also need the bridge extension (App menu → Claude Code → Download Extension), the "Enable MCP"
+    toggle, and a page refresh. Ten tools cover listing and creating looms and threads, adding and
+    updating nodes, search, context, and structured markdown import — everything additive, nothing
+    destructive. A Shuttle tab must be open; all data stays in your browser.
+  </p>
+</section>
+
 <section class="section feature" id="keyboard-reference">
   <div class="section-header">
     <h2>Keyboard Reference</h2>
@@ -149,6 +268,7 @@ description: How to use Shuttle — the command palette, navigation, editing, de
       <tr><td><code>⌘B</code></td><td>Loom Manager (in writing mode: bold)</td></tr>
       <tr><td><code>⌘1</code>–<code>⌘9</code>, <code>⌘0</code></td><td>Switch to Nth / last loom</td></tr>
       <tr><td><code>⌘⇧L</code></td><td>Toggle sidebar list/outline view</td></tr>
+      <tr><td><code>⌘⇧O</code></td><td>Workspace switcher (Chrome/Edge, with a folder connected)</td></tr>
       <tr><td><code>⌘⇧I</code></td><td>Toggle Loomy (AI chat)</td></tr>
       <tr><td><code>⌘⇧M</code></td><td>Toggle Map View (threads with place nodes)</td></tr>
       <tr><td><code>⌘.</code></td><td>Zen mode</td></tr>
