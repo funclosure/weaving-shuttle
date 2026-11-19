@@ -1,6 +1,6 @@
 # Shuttle MCP Server — Tool Reference
 
-> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.10.1, 2026-08-11).
+> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.49.0 and `@wwwshuttle-app/mcp` 0.6.0, 2026-11-19).
 
 Companion to the [Using Shuttle guide](https://weaving.wwwshuttle.app/tutorials/using-shuttle/). Code-verified against `app/mcp-server/` (package `@wwwshuttle-app/mcp` v0.1.0) and the app-side bridge (`src/services/mcpBridge.ts`).
 
@@ -17,33 +17,44 @@ The MCP server runs a WebSocket server on `ws://localhost:3847`; the Shuttle app
 
 Chromium-only (MV3 extension). All data lives in the browser tab's IndexedDB — the server holds no state, so **every tool fails if no Shuttle tab is open**.
 
-## Tools (11)
+## Where the tools live
 
-Read-only: `shuttle_status`, `shuttle_list_looms`, `shuttle_get_loom`, `shuttle_get_thread`, `shuttle_search`, `shuttle_get_context`. Write: `shuttle_create_loom`, `shuttle_create_thread`, `shuttle_add_nodes`, `shuttle_update_node`, `shuttle_import_markdown`. **There are no destructive tools** — no delete, move, reorder, or rename; writes are additive or whole-content replacement.
+The app side of every tool below is `src/services/agentToolTable.ts`; the bridge (`src/services/mcpBridge.ts`) only looks commands up there. The same table is registered on the browser's WebMCP model context when App menu → Claude Code → **Browser agents** is on, so an in-browser agent sees every tool below other than `shuttle_status` (server-only), under their unprefixed names (`list_looms`, not `shuttle_list_looms`). `src/services/mcpToolParity.test.ts` fails when this package's tool names or params drift from the table.
+
+Every app-side tool is declared by this package: `get_open_thread` and `get_usage_guide` since 0.4.0, and the Loom chat's three (`read_chat`, `post_chat`, `save_chat_as_thread`) since 0.6.0 (app v0.49.0).
+
+## Tools (16)
+
+Read-only: `shuttle_status`, `shuttle_get_open_thread`, `shuttle_list_looms`, `shuttle_get_loom`, `shuttle_get_thread`, `shuttle_search`, `shuttle_get_context`, `shuttle_get_usage_guide`, `shuttle_read_chat`. Write: `shuttle_create_loom`, `shuttle_create_thread`, `shuttle_add_nodes`, `shuttle_update_node`, `shuttle_import_markdown`, `shuttle_post_chat`, `shuttle_save_chat_as_thread`. **There are no destructive tools** — no delete, move, reorder, or rename; writes are additive or whole-content replacement. (`shuttle_save_chat_as_thread` clears a Loom chat only by keeping every message as a thread.)
 
 | Tool | Input | What it does |
 |---|---|---|
 | `shuttle_status` | — | Reports whether a client holds the socket. Call first. Caveat: in extension mode the *extension* is the client, so this can report connected with zero Shuttle tabs open — later tools then fail with "No wwwshuttle tab found". |
+| `shuttle_get_open_thread` | — | **Call first** (0.4.0). What the person is looking at: the open loom, the open thread as an outline with each node's id and rev, the loom's other threads (ids, node counts), the mode and the focused node. |
+| `shuttle_get_usage_guide` | — | (0.4.0) Shuttle's compact usage guide: shortcuts, sharing, node formatting, and how `rev` / `expectedRev` guard edits. |
 | `shuttle_list_looms` | — | All looms as `- {emoji} **{title}** (id: …)`, in sidebar order. |
 | `shuttle_get_loom` | `loomId` | Loom details + its threads (`nodeId`, `title`, `orderValue`, recursive `nodeCount`). Counts only — use `shuttle_get_thread` for contents. |
-| `shuttle_get_thread` | `threadNodeId` | **Reads a thread's full contents**: every node in tree order as an indented outline, each with its node ID (usable with `shuttle_update_node` / as `parentNodeId` in `shuttle_add_nodes`). Reads from the database, so it works for threads that aren't currently open. |
-| `shuttle_create_loom` | `title`, `emoji?`, `themeId?` (`default\|ocean\|forest\|sunset\|lavender`) | New loom, ordered last. Created with **no threads** — follow with `shuttle_create_thread` or `shuttle_import_markdown`. |
+| `shuttle_get_thread` | `threadNodeId`, `depth?`, `under?`, `preview?`, `since?` | **Reads a thread's full contents** (for a long one: `depth`/`preview` for an outline, `under` for one subtree, 0.5.0; `since` with the snapshot token of an earlier read for only what changed, 0.5.0): every node in tree order as an indented outline, each with its node ID and rev (the ID for `shuttle_update_node` / as `parentNodeId` in `shuttle_add_nodes`; the rev as `shuttle_update_node`'s `expectedRev`). Reads from the database, so it works for threads that aren't currently open. |
+| `shuttle_create_loom` | `title`, `emoji?`, `themeId?` (`default\|teal\|forest\|amber\|gold\|indigo\|rose\|mono`, the app's presets; before 0.4.0 the server listed ids that don't exist) | New loom, ordered last. Created with **no threads** — follow with `shuttle_create_thread` or `shuttle_import_markdown`. |
 | `shuttle_create_thread` | `loomId`, `title` | New thread at the end of the loom; the title becomes the thread root node. Its description mandates adding content right after — never leave an empty thread. |
-| `shuttle_add_nodes` | `threadNodeId`, `nodes: [{content, parentNodeId?}]` | Appends nodes (markdown content) under the thread (or under `parentNodeId`). Not transactional; returns a count, **not node IDs**, so you can't nest onto just-created nodes — use `shuttle_import_markdown` for hierarchy. |
-| `shuttle_update_node` | `nodeId`, `content` | Wholesale content replacement (no append/patch mode). The only way to alter existing content. |
+| `shuttle_add_nodes` | `threadNodeId`, `nodes: [{content, parentNodeId?}]` | Appends nodes (markdown content) under the thread (or under `parentNodeId`). Not transactional. Lists each created node with its ID and rev (0.3.0), so you can nest onto or edit just-created nodes; for hierarchy prefer `shuttle_import_markdown`. |
+| `shuttle_update_node` | `nodeId`, `content`, `expectedRev?` | Wholesale content replacement (no append/patch mode). The only way to alter existing content. Pass `expectedRev` (the node's rev from a read, 0.3.0): if the node changed since, nothing is written and the error gives its current content and rev. |
 | `shuttle_search` | `query`, `loomId?` | Case-insensitive **substring** match over node content (not fuzzy). Returns snippets with loom/thread context; renders at most 10 results even when reporting a larger count. |
 | `shuttle_get_context` | — | What the user is looking at: `{loomId, loomTitle, threadNodeId, threadTitle, focusedNodeId, mode}` (`viewing`/`writing`). Call before relying on `shuttle_import_markdown`'s current-thread default. |
-| `shuttle_import_markdown` | `markdown`, `threadId?` | **Preferred write path** for anything structured. With a leading `# Title` → creates a whole new loom (threads split on `---`); without → appends bullets to `threadId` or the current thread. Full support for 2-space-indent hierarchy, `#anchor` declarations, and `[>>](anchor)` depth links. Goes through the same op funnel as typing, so it syncs to tabs/rooms/devices. Returns node/thread/depth-link counts + warnings. |
+| `shuttle_import_markdown` | `markdown`, `threadId?` | **Preferred write path** for anything structured. With a leading `# Title` → creates a whole new loom (threads split on `---`); without → appends bullets to `threadId` or the current thread. Full support for 2-space-indent hierarchy, `#anchor` declarations, and `[>>](anchor)` depth links. Goes through the same op funnel as typing, so it syncs to tabs/rooms/devices. Returns node/thread/depth-link counts, the created thread IDs and nodes (ID and rev, first 200; 0.3.0) + warnings. |
+| `shuttle_read_chat` | `loomId?`, `after?` | (0.6.0) The Loom chat of a shared Loom (default: the open Loom): the last 50 messages (`id`, author, time, text, `replyTo`) and a `cursor`. Pass the cursor back as `after` for only what arrived since ("Nothing new" when none) — the cue that something new arrived. `reset` means the cursor predates a reload of the app: a fresh read, skip ids already seen. Shared Looms only. |
+| `shuttle_post_chat` | `loomId?`, `text`, `replyTo?` | (0.6.0) Posts to the Loom chat under the workspace's sync name (what the members see). Markdown, up to 4000 characters; `replyTo` (a message id) answers that message, one level deep. Refused when the chat holds 200 messages: save it first. |
+| `shuttle_save_chat_as_thread` | `loomId?`, `title?` | (0.6.0) Keeps the Loom chat as a new thread at the end of its Loom (one node per message, `**Name:** text`, replies as child nodes), then clears the chat for everyone. Returns the thread id. |
 
 ### Import-markdown rules that matter
 
 - Write depth links in three passes *within one import*: content first, then `#anchor` targets, then `[>>](anchor)` references — an "Unmatched anchor link" warning means the raw `[>>](name)` text is rendered in the UI and must be fixed (re-import or `shuttle_update_node`).
 - Silent-failure edge: no `# Title`, no `threadId`, and no current thread → the import has no destination. Check `shuttle_get_context` first.
-- Anchors may be referenced by multiple links; unused anchors are harmless.
+- Anchors may be referenced by multiple links; unused anchors are harmless (see usage-map §format notes).
 
 ## Resources
 
-- **`shuttle://usage`** (text/markdown) — the canonical usage map (the app repo's `app/docs/usage-map.md`, bundled into the package at build time). Agents should read it before advising users or generating Shuttle content.
+- **`shuttle://usage`** (text/markdown) — the canonical usage map (this repo's `app/docs/usage-map.md`, bundled into the package at build time). Agents should read it before advising users or generating Shuttle content.
 
 ### Reading content
 

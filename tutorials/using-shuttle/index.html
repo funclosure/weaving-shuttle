@@ -249,9 +249,12 @@ description: How to use Shuttle — the command palette, navigation, editing, de
     Claude Code can read and write your Shuttle directly:
     <code>claude mcp add wwwshuttle -- npx @wwwshuttle-app/mcp</code>. On the production app you
     also need the bridge extension (App menu → Claude Code → Download Extension), the "Enable MCP"
-    toggle, and a page refresh. Eleven tools cover listing looms, reading a thread's full
-    contents, creating looms and threads, adding and updating nodes, search, context, and
-    structured markdown import — everything additive, nothing destructive. The server also
+    toggle, and a page refresh. Sixteen tools cover what's open right now, listing looms, reading a
+    thread's full contents, creating looms and threads, adding and updating nodes (an update is
+    refused if the node changed since you read it), search, context, structured markdown import,
+    and the Loom chat of a shared Loom — everything additive, nothing destructive. In-browser
+    agents get the same tools over WebMCP (App menu → Claude Code → "Browser agents", in Chrome
+    with the WebMCP flag). The server also
     exposes a <code>shuttle://usage</code> resource: the canonical usage map, worth reading
     before generating Shuttle content. A Shuttle tab must be open; all data stays in your
     browser. Full details in the
