@@ -1,6 +1,6 @@
 # Shuttle MCP Server — Tool Reference
 
-> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.49.0 and `@wwwshuttle-app/mcp` 0.6.0, 2026-11-19).
+> Mirror for LLM consumption. Source of truth: `app/docs/mcp-tools.md` in the Shuttle app repository (current as of app v0.49.2 and `@wwwshuttle-app/mcp` 0.6.0, 2026-11-19).
 
 Companion to the [Using Shuttle guide](https://weaving.wwwshuttle.app/tutorials/using-shuttle/). Code-verified against `app/mcp-server/` (package `@wwwshuttle-app/mcp` v0.1.0) and the app-side bridge (`src/services/mcpBridge.ts`).
 
@@ -21,11 +21,11 @@ Chromium-only (MV3 extension). All data lives in the browser tab's IndexedDB —
 
 The app side of every tool below is `src/services/agentToolTable.ts`; the bridge (`src/services/mcpBridge.ts`) only looks commands up there. The same table is registered on the browser's WebMCP model context when App menu → Claude Code → **Browser agents** is on, so an in-browser agent sees every tool below other than `shuttle_status` (server-only), under their unprefixed names (`list_looms`, not `shuttle_list_looms`). `src/services/mcpToolParity.test.ts` fails when this package's tool names or params drift from the table.
 
-Every app-side tool is declared by this package: `get_open_thread` and `get_usage_guide` since 0.4.0, and the Loom chat's three (`read_chat`, `post_chat`, `save_chat_as_thread`) since 0.6.0 (app v0.49.0).
+Every app-side tool is declared by this package: `get_open_thread` and `get_usage_guide` since 0.4.0, the Loom chat's three (`read_chat`, `post_chat`, `save_chat_as_thread`) since 0.6.0 (app v0.49.0), and `select_node`, `sync_status` and `add_image` from the next package release (app v0.49.2).
 
-## Tools (16)
+## Tools (19)
 
-Read-only: `shuttle_status`, `shuttle_get_open_thread`, `shuttle_list_looms`, `shuttle_get_loom`, `shuttle_get_thread`, `shuttle_search`, `shuttle_get_context`, `shuttle_get_usage_guide`, `shuttle_read_chat`. Write: `shuttle_create_loom`, `shuttle_create_thread`, `shuttle_add_nodes`, `shuttle_update_node`, `shuttle_import_markdown`, `shuttle_post_chat`, `shuttle_save_chat_as_thread`. **There are no destructive tools** — no delete, move, reorder, or rename; writes are additive or whole-content replacement. (`shuttle_save_chat_as_thread` clears a Loom chat only by keeping every message as a thread.)
+Read-only: `shuttle_status`, `shuttle_get_open_thread`, `shuttle_list_looms`, `shuttle_get_loom`, `shuttle_get_thread`, `shuttle_search`, `shuttle_get_context`, `shuttle_get_usage_guide`, `shuttle_read_chat`, `shuttle_sync_status`. Navigation: `shuttle_select_node`. Write: `shuttle_create_loom`, `shuttle_create_thread`, `shuttle_add_nodes`, `shuttle_update_node`, `shuttle_import_markdown`, `shuttle_post_chat`, `shuttle_save_chat_as_thread`, `shuttle_add_image`. **There are no destructive tools** — no delete, move, reorder, or rename; writes are additive or whole-content replacement. (`shuttle_save_chat_as_thread` clears a Loom chat only by keeping every message as a thread.)
 
 | Tool | Input | What it does |
 |---|---|---|
@@ -45,6 +45,9 @@ Read-only: `shuttle_status`, `shuttle_get_open_thread`, `shuttle_list_looms`, `s
 | `shuttle_read_chat` | `loomId?`, `after?` | (0.6.0) The Loom chat of a shared Loom (default: the open Loom): the last 50 messages (`id`, author, time, text, `replyTo`) and a `cursor`. Pass the cursor back as `after` for only what arrived since ("Nothing new" when none) — the cue that something new arrived. `reset` means the cursor predates a reload of the app: a fresh read, skip ids already seen. Shared Looms only. |
 | `shuttle_post_chat` | `loomId?`, `text`, `replyTo?` | (0.6.0) Posts to the Loom chat under the workspace's sync name (what the members see). Markdown, up to 4000 characters; `replyTo` (a message id) answers that message, one level deep. Refused when the chat holds 200 messages: save it first. |
 | `shuttle_save_chat_as_thread` | `loomId?`, `title?` | (0.6.0) Keeps the Loom chat as a new thread at the end of its Loom (one node per message, `**Name:** text`, replies as child nodes), then clears the chat for everyone. Returns the thread id. |
+| `shuttle_select_node` | `nodeId` | (app v0.49.2) Moves the view to a node and selects it in viewing mode, so keyboard shortcuts act on it (⌥↑/⌥↓ move, Tab/⇧Tab indent, ⌘⌫ delete, Enter writes). Switches Loom and thread as needed, leaves a ⌘← history step, takes the keyboard out of any text field. Refused while an editor is open. A thread root opens its thread with nothing selected. |
+| `shuttle_sync_status` | — | (app v0.49.2) Whether this device has caught up with its rooms and whether its own writes reached them: per room (the workspace room, each shared Loom) its state, `caughtUp` (online: the catch-up replay and outbox drain finished) and `unconfirmed` (batches the room has not acked; 0 means delivered), plus `allCaughtUp` / `allDelivered`. In a tab that is not the leader, it says another tab holds the rooms. |
+| `shuttle_add_image` | `url?`, `data?`, `mimeType?`, `alt?`, `afterNodeId?`, `parentNodeId?`, `threadNodeId?` | (app v0.49.2) Adds a picture as a new row, stored like a pasted image (compressed to at most 2 MB, synced to rooms): `url` (http(s), `file://` or an absolute path, read by this server) or `data` (base64). Right after `afterNodeId`, or at the end of `parentNodeId` / `threadNodeId` (default: the open thread). Returns the row's id and rev and the asset id (`![alt](asset:<id>)` shows it elsewhere). Over WebMCP the page fetches `url` itself, so many sites refuse; pass `data` there. |
 
 ### Import-markdown rules that matter
 
